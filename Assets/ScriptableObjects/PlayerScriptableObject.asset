@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e544891075e59c24faaf297d4f634d9a, type: 3}
   m_Name: PlayerScriptableObject
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 5
   rb: {fileID: 0}
+  whatisGround:
+    serializedVersion: 2
+    m_Bits: 64
+  rayGround:
+    serializedVersion: 2
+    m_Bits: 256

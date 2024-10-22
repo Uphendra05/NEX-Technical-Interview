@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class PlayerSO : ScriptableObject
 {
-    [SerializeField] private float speed;
-    [SerializeField] private Rigidbody rb;
+    public float speed;
+    public Rigidbody rb;
+    public LayerMask whatisGround;
+    public LayerMask rayGround;
 }
