@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[CreateAssetMenu(fileName = "PlayerScriptableObject", menuName = "ScriptableObjects/PlayerScriptableObject")]
 
-[CreateAssetMenu(fileName = "PlayerScriptableObject", menuName = "ScriptableObjects/PlayerObject")]
 public class PlayerSO : ScriptableObject
 {
     [SerializeField] private float speed;

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameService : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private PlayerService playerService;   
+    
+    
     void Start()
     {
         
