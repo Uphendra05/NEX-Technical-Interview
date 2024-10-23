@@ -12,7 +12,7 @@ public class MoveState : BaseState
 
     public override void Start()
     {
-        m_InputService.OnDash += Dodge;
+       // m_InputService.OnDash += Dodge;
     }
 
     public override void Update()
@@ -22,6 +22,15 @@ public class MoveState : BaseState
 
     public override void FixedUpdate()
     {
+        if (m_InputService.InputAxis.magnitude == 0)
+        {
+            m_PlayerController.ChangeState(EPlayerState.IDLE);
+
+            HandleRotation();
+            return;
+            
+        }
+
         HandleMove();
         HandleRotation();
     }
@@ -35,6 +44,8 @@ public class MoveState : BaseState
 
     private void HandleMove()
     {
+        m_PlayerController.ChangeState(EPlayerState.MOVE);
+
         Vector3 cameraForward = Camera.main.transform.forward;
         cameraForward.y = 0f; 
         cameraForward.Normalize();

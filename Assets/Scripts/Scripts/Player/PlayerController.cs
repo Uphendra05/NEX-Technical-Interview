@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         m_IPlayerInputService.UpdateInputs();
 
+        Debug.Log(" Current State : " + CurrentStateID.ToString());
         foreach (var state in m_ListOfStates)
         {
             state.Value.Update();
