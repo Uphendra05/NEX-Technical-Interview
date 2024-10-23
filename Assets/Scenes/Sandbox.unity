@@ -2063,6 +2063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScriptabelObject: {fileID: 11400000, guid: d7cf600756dc2ff49a4b0aefe05d97d6, type: 2}
+  CurrentStateID: 0
 --- !u!1 &308718226
 GameObject:
   m_ObjectHideFlags: 0
@@ -5156,7 +5157,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: -0.12566158, y: 0.87348735, z: -0.3112558, w: -0.35263145}
-  m_LocalPosition: {x: 17.84, y: 21.2, z: 18.13}
+  m_LocalPosition: {x: 9.7, y: 11.6, z: 9.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5175,7 +5176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 288160435}
-  deadzone: 0
+  deadzone: 0.1
   followdistance: 1
 --- !u!114 &963194230
 MonoBehaviour:
@@ -8149,6 +8150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1632386911}
+  - component: {fileID: 1632386912}
   m_Layer: 0
   m_Name: ProjectileSpawn
   m_TagString: Untagged
@@ -8171,6 +8173,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 288160439}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1632386912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632386910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52f5ec10ba5123b4ea103e87aacb7784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  range: 100
+  spawnPoint: {fileID: 1632386911}
+  bulletTrail: {fileID: 2877025456637224318, guid: e312ac91081a34842b61c71f6657482a, type: 3}
+  shootDelay: 0.1
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 128
+  isSpread: 0
+  spreadAmount: {x: 1, y: 1, z: 1}
 --- !u!1 &1642303421
 GameObject:
   m_ObjectHideFlags: 0

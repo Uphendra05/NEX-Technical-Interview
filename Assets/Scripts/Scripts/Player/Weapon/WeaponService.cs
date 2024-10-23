@@ -8,23 +8,127 @@ using Zenject;
 
 public class WeaponService : MonoBehaviour
 {
-    public WeaponSO weaponSO;
+    //public WeaponSO weaponSO;
 
-    private ObjectPool<TrailRenderer> trailRendererPool;
+    //private ObjectPool<TrailRenderer> trailRendererPool;
+
+    public int damage = 10;
+    public int range = 100;
+
+    public Transform spawnPoint;
+    public TrailRenderer bulletTrail;
+    public float shootDelay = 0.5f;
+    public LayerMask whatIsEnemy;
+    private float lastShootTime;
+    public bool isSpread;
+    public Vector3 spreadAmount = Vector3.one;
 
     private void Start()
     {
-        Spawn(this.transform);
+        
 
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.H))
+        if(Input.GetMouseButtonDown(0))
         {
            Shoot();
         }
     }
 
+    public void Shoot()
+    {
+
+        if(lastShootTime  + shootDelay < Time.time)
+        {
+
+            Vector3 direction = GetDirection();
+
+
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(spawnPoint.transform.position, direction, out hitInfo, range))
+            {
+                TrailRenderer trail = Instantiate(bulletTrail, spawnPoint.position, Quaternion.identity);
+
+                StartCoroutine(MoveTrail(trail, hitInfo));
+
+                lastShootTime = Time.time;
+            }
+        }
+      
+
+    }
+
+    public IEnumerator MoveTrail(TrailRenderer trail, RaycastHit hit)
+    {
+        float time = 0;
+        Vector3 startPos = trail.transform.position;
+
+        while(time < 1)
+        {
+            bulletTrail.transform.position = Vector3.Lerp(startPos, hit.point, time);
+
+            time += Time.deltaTime / trail.time ;
+
+            yield return null;
+
+        }
+
+        trail.transform.position = hit.point;
+
+
+
+        yield return null;
+    }
+
+    private Vector3 GetDirection()
+    {
+        Vector3 direction = spawnPoint.transform.forward;
+
+        if(isSpread)
+        {
+            direction += new Vector3(
+                Random.Range(-spreadAmount.x, spreadAmount.x),
+                Random.Range(-spreadAmount.y, spreadAmount.y),
+                Random.Range(-spreadAmount.z, spreadAmount.z));
+
+            direction.Normalize();
+
+        }
+
+        return direction.normalized;
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        
+        Vector3 startPoint = spawnPoint.position;
+
+        Vector3 direction = spawnPoint.forward;
+
+        float rayLength = range;
+
+        RaycastHit hit;
+        if (Physics.Raycast(startPoint, direction, out hit, rayLength))
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(startPoint, hit.point);
+
+            // Optionally, draw a sphere at the hit point
+            Gizmos.DrawSphere(hit.point, 0.2f);
+        }
+        else
+        {
+            // If no hit, draw a red ray showing the full length
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(startPoint, startPoint + direction * rayLength);
+        }
+    }
+
+
+    /*
     public void Spawn(Transform parent)
     {
         weaponSO.lastShootTime = 0;
@@ -110,4 +214,5 @@ public class WeaponService : MonoBehaviour
         return trail;
 
     }
+    */
 }
