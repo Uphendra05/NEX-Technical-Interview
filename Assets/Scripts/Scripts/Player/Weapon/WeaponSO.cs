@@ -7,8 +7,13 @@ using UnityEngine;
 public class WeaponSO : ScriptableObject
 {
 
-    public Transform firePoint;
-    
+    public EWeaponType weaponType;
+    public string weaponName;
+    public GameObject weaponObject;
+    public Vector3 spawnPoint;
+    public Vector3 spawnRotation;
+
+
     public WeaponShootConfig weaponShootConfig;
     public WeaponTrailConfig weaponTrailConfig;
 
@@ -16,6 +21,9 @@ public class WeaponSO : ScriptableObject
 
     public int bulletCount;
     public int maxBullets;
+    public GameObject model;
+    public float lastShootTime;
+    public ParticleSystem shootFx;
 
 
 
