@@ -7,14 +7,23 @@ using UnityEngine;
 
 public class PlayerSO : ScriptableObject
 {
+    [Header("Player Attributes")]
     public float speed;
     public Rigidbody rb;
-    public LayerMask whatisGround;
-    public LayerMask rayGround;
+    public LayerMask whatIsGround;
+    public LayerMask whatIsRayGround;
 
+    [Header("Player Dash Attributes ")]
     public float dashDistance = 5f;
     public float dashTime = 0.5f;
     public float dashCooldown = 2f;
     public bool canDash = true;
     public float obstacleCheckDistance = 1f;
+
+    [Header("Player Shoot Attributes")]
+    public Transform firePoint;
+    public LayerMask whatIsEnemy;
+    public float fireRate;
+
+
 }

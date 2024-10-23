@@ -50,7 +50,8 @@ public class DodgeState : BaseState
             else
             {
                 endPos = m_PlayerController.transform.position + cameraRelativeDirection.normalized * m_PlayerController.playerScriptabelObject.dashDistance;
-                RaycastHit hit;
+       // change this raycast into service
+                RaycastHit hit; 
                 if (Physics.Raycast(m_PlayerController.transform.position, cameraRelativeDirection, out hit, m_PlayerController.playerScriptabelObject.obstacleCheckDistance))
                 {
                     Debug.Log(hit.point);
@@ -97,6 +98,7 @@ public class DodgeState : BaseState
         m_PlayerController.transform.position = endPos;
         yield return new WaitForSeconds(m_PlayerController.playerScriptabelObject.dashCooldown);
         m_PlayerController.playerScriptabelObject.canDash = true;
+        m_PlayerController.ChangeState(EPlayerState.MOVE);
     }
 
     private Vector3 CamRelativeDirection(Vector3 direction, Camera camera)

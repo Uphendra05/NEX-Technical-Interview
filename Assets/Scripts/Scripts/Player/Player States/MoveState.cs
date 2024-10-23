@@ -12,7 +12,7 @@ public class MoveState : BaseState
 
     public override void Start()
     {
-        
+        m_InputService.OnDash += Dodge;
     }
 
     public override void Update()
@@ -28,7 +28,7 @@ public class MoveState : BaseState
 
     public override void OnDestroy()
     {
-
+        m_InputService.OnDash -= Dodge;
 
     }
 
@@ -60,5 +60,10 @@ public class MoveState : BaseState
             target.y = m_PlayerController.transform.position.y;
             m_PlayerController.transform.LookAt(target);
         }
+    }
+
+    private void Dodge()
+    {
+        m_PlayerController.ChangeState(EPlayerState.DASH);
     }
 }

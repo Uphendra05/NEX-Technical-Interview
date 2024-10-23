@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
 
     private Dictionary<EPlayerState, BaseState> m_ListOfStates = new Dictionary<EPlayerState, BaseState>();
-    private EPlayerState CurrentStateID = EPlayerState.IDLE;
+    public EPlayerState CurrentStateID = EPlayerState.IDLE;
     private IPlayerInputService m_IPlayerInputService;
     private IRaycastService m_RaycastService;
     private IPlayerHealthService m_PlayerHealthService;
