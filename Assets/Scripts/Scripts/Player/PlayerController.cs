@@ -14,14 +14,17 @@ public class PlayerController : MonoBehaviour
     private EPlayerState CurrentStateID = EPlayerState.IDLE;
     private IPlayerInputService m_IPlayerInputService;
     private IRaycastService m_RaycastService;
+    private IPlayerHealthService m_PlayerHealthService;
 
 
 
     [Inject] 
-    public void Construct(IPlayerInputService playerInputService, IRaycastService raycastService)
+    public void Construct(IPlayerInputService playerInputService, 
+        IRaycastService raycastService,IPlayerHealthService playerHealthService )
     {
         m_IPlayerInputService = playerInputService;
         m_RaycastService = raycastService;
+        m_PlayerHealthService = playerHealthService;
     }
 
 
