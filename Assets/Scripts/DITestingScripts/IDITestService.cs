@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EPlayerState
+ 
+
+
+
+public interface IDITestService
 {
-    IDLE = 0,
-    MOVE = 1,
-    DASH = 2,
-   
+
+    public abstract void Greet();
+
+
 }

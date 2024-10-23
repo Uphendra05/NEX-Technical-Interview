@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -11,25 +12,42 @@ public class PlayerController : MonoBehaviour
 
     private Dictionary<EPlayerState, BaseState> m_ListOfStates = new Dictionary<EPlayerState, BaseState>();
     private EPlayerState CurrentStateID = EPlayerState.IDLE;
-    private PlayerInputService PlayerInputService;
     private IPlayerInputService m_IPlayerInputService;
+    private IRaycastService m_RaycastService;
+
+
+
+    [Inject] 
+    public void Construct(IPlayerInputService playerInputService, IRaycastService raycastService)
+    {
+        m_IPlayerInputService = playerInputService;
+        m_RaycastService = raycastService;
+    }
+
 
     void Start()
     {
-        PlayerInputService = new PlayerInputService();        
-        m_IPlayerInputService = PlayerInputService;
-
-
+        playerScriptabelObject.rb = this.GetComponent<Rigidbody>();
         AddState(EPlayerState.MOVE, new MoveState());
+        AddState(EPlayerState.DASH, new DodgeState());
 
-        ChangeState(EPlayerState.MOVE); 
+        ChangeState(EPlayerState.MOVE);
+
+        foreach (var state in m_ListOfStates)
+        {
+            state.Value.Start();
+        }
     }
 
 
     void Update()
     {
-        PlayerInputService.UpdateInputs();
-       
+        m_IPlayerInputService.UpdateInputs();
+
+        foreach (var state in m_ListOfStates)
+        {
+            state.Value.Update();
+        }
     }
 
     private void FixedUpdate()
@@ -48,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     public void AddState(EPlayerState eState, BaseState state)
     {
-        state.Init(this, m_IPlayerInputService);
+        state.Init(this, m_IPlayerInputService, m_RaycastService);
 
         m_ListOfStates.Add(eState, state);
     }

@@ -10,12 +10,13 @@ public class PlayerInputService : IPlayerInputService
 
     public event Action OnMouseDown = delegate { };
     public event Action OnMouseUp = delegate { };
+    public event Action OnDash = delegate { };
 
 
     private Vector2 inputAxis = Vector2.zero;
     private Vector2 mousPosition = Vector2.zero;
-   
 
+    public KeyCode dashKey = KeyCode.Space;
 
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -37,6 +38,10 @@ public class PlayerInputService : IPlayerInputService
         if (Input.GetMouseButtonDown(1))
         {
             OnMouseUp.Invoke();
+        }
+        if(Input.GetKeyDown(dashKey))
+        {
+            OnDash.Invoke();
         }
     }
 

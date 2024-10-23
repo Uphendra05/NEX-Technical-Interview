@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject.SpaceFighter;
 
 public class MoveState : BaseState
 {
@@ -22,6 +23,7 @@ public class MoveState : BaseState
     public override void FixedUpdate()
     {
         HandleMove();
+        HandleRotation();
     }
 
    
@@ -40,7 +42,18 @@ public class MoveState : BaseState
         m_PlayerController.playerScriptabelObject.rb.AddForce(velocity, ForceMode.VelocityChange);
         float drag = 10f;
         m_PlayerController.playerScriptabelObject.rb.drag = drag;
-        Debug.Log("Input X : " + m_InputService.InputAxis.x + "Input Y : " + m_InputService.InputAxis.y);
+       // Debug.Log("Input X : " + m_InputService.InputAxis.x + "Input Y : " + m_InputService.InputAxis.y);
 
+    }
+
+    private void HandleRotation()
+    {
+        Vector3? hitPoint = m_RaycastService.GetRaycastHitDir();
+        if (hitPoint.HasValue)
+        {
+            Vector3 target = hitPoint.Value;
+            target.y = m_PlayerController.transform.position.y;
+            m_PlayerController.transform.LookAt(target);
+        }
     }
 }
