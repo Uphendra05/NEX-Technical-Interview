@@ -7,6 +7,7 @@ public class BaseState
     public virtual void Start() { }
     public virtual void Update() { }
     public virtual void FixedUpdate() { }
+    public virtual void OnDestroy() { }
 
     protected PlayerController m_PlayerController;
     protected IPlayerInputService m_InputService;

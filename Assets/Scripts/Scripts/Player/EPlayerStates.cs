@@ -7,5 +7,6 @@ public enum EPlayerState
     IDLE = 0,
     MOVE = 1,
     DASH = 2,
+    SHOOT = 3,
    
 }

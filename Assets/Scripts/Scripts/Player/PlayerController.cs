@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
         playerScriptabelObject.rb = this.GetComponent<Rigidbody>();
         AddState(EPlayerState.MOVE, new MoveState());
         AddState(EPlayerState.DASH, new DodgeState());
+        AddState(EPlayerState.SHOOT, new ShootState());
 
         ChangeState(EPlayerState.MOVE);
 
@@ -95,5 +96,15 @@ public class PlayerController : MonoBehaviour
     public BaseState GetCurrentState()
     {
         return m_ListOfStates[CurrentStateID];
+    }
+
+
+    // Still need to call this function
+    public void GameCleanup()
+    {
+        foreach (var state in m_ListOfStates)
+        {
+            state.Value.OnDestroy();
+        }
     }
 }

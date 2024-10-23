@@ -26,7 +26,12 @@ public class MoveState : BaseState
         HandleRotation();
     }
 
-   
+    public override void OnDestroy()
+    {
+
+
+    }
+
 
     private void HandleMove()
     {

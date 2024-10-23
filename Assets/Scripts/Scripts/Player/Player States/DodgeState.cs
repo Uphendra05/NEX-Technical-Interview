@@ -13,11 +13,12 @@ public class DodgeState : BaseState
     public override void Start()
     {
         m_PlayerController.playerScriptabelObject.canDash = true;
+        m_InputService.OnDash += Dash;
     }
 
     public override void Update()
     {
-        m_InputService.OnDash += Dash;
+       
     }
 
     public override void FixedUpdate()
@@ -26,30 +27,40 @@ public class DodgeState : BaseState
 
     }
 
+    public override void OnDestroy()
+    {
+
+        m_InputService.OnDash -= Dash;
+    }
 
     public void Dash()
     {
-        m_PlayerController.playerScriptabelObject.canDash = false;
-        Vector3 cameraRelativeDirection = CamRelativeDirection(m_InputService.InputAxis, Camera.main);
-        Vector3 startPos = m_PlayerController.transform.position;
-        Vector3 endPos ;
-
-        if(m_InputService.InputAxis.magnitude == 0)
+        if (m_PlayerController.playerScriptabelObject.canDash == true)
         {
-            endPos = startPos + m_PlayerController.transform.forward * m_PlayerController.playerScriptabelObject.dashDistance;
+            m_PlayerController.playerScriptabelObject.canDash = false;
+            Vector3 cameraRelativeDirection = CamRelativeDirection(m_InputService.InputAxis, Camera.main);
+            Vector3 startPos = m_PlayerController.transform.position;
+            Vector3 endPos;
+
+            if (m_InputService.InputAxis.magnitude == 0)
+            {
+                endPos = startPos + m_PlayerController.transform.forward * m_PlayerController.playerScriptabelObject.dashDistance;
+                m_PlayerController.StartCoroutine(DoDash(endPos));
+            }
+            else
+            {
+                endPos = m_PlayerController.transform.position + cameraRelativeDirection.normalized * m_PlayerController.playerScriptabelObject.dashDistance;
+                RaycastHit hit;
+                if (Physics.Raycast(m_PlayerController.transform.position, cameraRelativeDirection, out hit, m_PlayerController.playerScriptabelObject.obstacleCheckDistance))
+                {
+                    Debug.Log(hit.point);
+                    endPos = hit.point;
+                }
+            }
+
             m_PlayerController.StartCoroutine(DoDash(endPos));
         }
-        else
-        {
-            endPos = m_PlayerController.transform.position + cameraRelativeDirection.normalized * m_PlayerController.playerScriptabelObject.dashDistance;
-            RaycastHit hit;
-            if (Physics.Raycast(m_PlayerController.transform.position, cameraRelativeDirection, out hit, m_PlayerController.playerScriptabelObject.obstacleCheckDistance))
-            {
-                Debug.Log(hit.point);
-                endPos = hit.point;
-            }
-        }
-        m_PlayerController.StartCoroutine(DoDash(endPos));
+       
 
 
 
@@ -62,6 +73,8 @@ public class DodgeState : BaseState
 
     private IEnumerator DoDash(Vector3? endPosOverride = null)
     {
+       // m_InputService.OnDash -= Dash;
+
         float elapsedTime = 0f;
         Vector3 startPos = m_PlayerController.transform.position;
         Vector3 endPos = endPosOverride ?? startPos + m_PlayerController.transform.forward * m_PlayerController.playerScriptabelObject.dashDistance; // Use override if provided, else use default
