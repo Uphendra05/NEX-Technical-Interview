@@ -8,18 +8,18 @@ public class BossService : IBossService
     public void StartBossPhase()
     {
 
-        Debug.Log("In Boss Start !");
+        //Debug.Log("In Boss Start !");
     }
 
     public void UpdateBossPhase()
     {
-        Debug.Log("In Boss Update !");
+        //Debug.Log("In Boss Update !");
 
     }
 
     public void Cleanup()
     {
-        Debug.Log("In Boss Cleanup !");
+        //Debug.Log("In Boss Cleanup !");
 
     }
 
