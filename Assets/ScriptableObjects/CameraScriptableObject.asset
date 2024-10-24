@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e962b4129dea0b49833b0e1f3c918ec, type: 3}
+  m_Name: CameraScriptableObject
+  m_EditorClassIdentifier: 
+  player: {fileID: 4161564880164603230, guid: d08650424ec712d4598e81529f5d2410, type: 3}
+  deadzone: 0.1
+  followdistance: 1
+  target: {fileID: 0}
+  camePos: {x: -2.1814983, y: 11.696547, z: 52.24687}
+  followoffset: {x: 9.7, y: 10.1, z: 9.7}
+  _mouseDir: {x: -0.39209148, y: -0.030517781, z: -0.9194198}

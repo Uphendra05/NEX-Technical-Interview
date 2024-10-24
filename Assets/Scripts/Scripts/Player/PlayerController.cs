@@ -9,14 +9,11 @@ public class PlayerController : MonoBehaviour
 
     public PlayerSO playerScriptabelObject;
 
-
     private Dictionary<EPlayerState, BaseState> m_ListOfStates = new Dictionary<EPlayerState, BaseState>();
     public EPlayerState CurrentStateID = EPlayerState.IDLE;
     private IPlayerInputService m_IPlayerInputService;
     private IRaycastService m_RaycastService;
     private IPlayerHealthService m_PlayerHealthService;
-
-
 
     [Inject] 
     public void Construct(IPlayerInputService playerInputService, 
@@ -41,6 +38,7 @@ public class PlayerController : MonoBehaviour
         {
             state.Value.Start();
         }
+
     }
 
 
@@ -53,6 +51,7 @@ public class PlayerController : MonoBehaviour
         {
             state.Value.Update();
         }
+
     }
 
     private void FixedUpdate()
@@ -62,11 +61,6 @@ public class PlayerController : MonoBehaviour
             state.Value.FixedUpdate();
         }
     }
-
-
-
-
-
 
 
     public void AddState(EPlayerState eState, BaseState state)

@@ -14,6 +14,7 @@ public interface IPlayerInputService
     public event Action OnDash;
    
     public abstract void UpdateInputs();
+    public abstract Vector3 GetMouseDirection();
 
 }
 

@@ -45,5 +45,12 @@ public class PlayerInputService : IPlayerInputService
         }
     }
 
+    public Vector3 GetMouseDirection()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
+        Vector3 direction = (worldPos - Camera.main.transform.position).normalized;
+        return direction;
 
+    }
 }

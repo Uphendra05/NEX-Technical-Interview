@@ -18,7 +18,7 @@ public class WeaponService : MonoBehaviour
     public Transform spawnPoint;
     public TrailRenderer bulletTrail;
     public float shootDelay = 0.5f;
-    public LayerMask whatIsEnemy;
+    public LayerMask whatIsEnemy ;
     private float lastShootTime;
     public bool isSpread;
     public Vector3 spreadAmount = Vector3.one;
@@ -49,10 +49,15 @@ public class WeaponService : MonoBehaviour
 
             if (Physics.Raycast(spawnPoint.transform.position, direction, out hitInfo, range))
             {
+                if(hitInfo.collider.gameObject.CompareTag("Enemy"))
+                {
+                    Destroy(hitInfo.collider.gameObject);
+
+                }
                 TrailRenderer trail = Instantiate(bulletTrail, spawnPoint.position, Quaternion.identity);
-
+               
                 StartCoroutine(MoveTrail(trail, hitInfo));
-
+               
                 lastShootTime = Time.time;
             }
         }
