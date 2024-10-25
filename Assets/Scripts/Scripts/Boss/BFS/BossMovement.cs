@@ -91,11 +91,7 @@ public class BossMovement : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, transform.forward);
-    }
+  
 
 
     Node GetNewEndNode()
