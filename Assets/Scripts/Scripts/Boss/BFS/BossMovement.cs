@@ -76,7 +76,7 @@ public class BossMovement : MonoBehaviour
             {
                 Debug.Log("IN Top");
                 Vector3 targetPosition = enragedNode.position;
-                targetPosition.y = 0;
+                targetPosition.y = transform.position.y;
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
                 if (Vector3.Distance(transform.position, targetPosition) < 0.1f)

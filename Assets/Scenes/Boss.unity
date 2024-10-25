@@ -2380,10 +2380,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 843743131}
+  - component: {fileID: 843743132}
+  - component: {fileID: 843743133}
   - component: {fileID: 843743130}
   - component: {fileID: 843743129}
   - component: {fileID: 843743128}
-  - component: {fileID: 843743132}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -2512,6 +2513,22 @@ MonoBehaviour:
   - {fileID: 254214888}
   - {fileID: 162192817}
   currentTargetIndex: 0
+--- !u!114 &843743133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843743127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 763b1e356f266fa47ac684fa24e90e09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  boss: {fileID: 843743132}
+  enragedMode: {fileID: 92656184}
 --- !u!1 &1135502341
 GameObject:
   m_ObjectHideFlags: 0
