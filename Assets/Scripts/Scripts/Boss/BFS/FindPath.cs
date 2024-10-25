@@ -28,7 +28,6 @@ public class FindPath
 
             if (current == m_EndNode)
             {
-                // Reconstruct the path
                 while (current != null)
                 {
                     path.Insert(0, current);

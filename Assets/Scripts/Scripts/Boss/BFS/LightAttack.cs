@@ -5,10 +5,17 @@ using UnityEngine;
 public class LightAttack : MonoBehaviour
 {
     public List<GameObject> firePoints = new List<GameObject>();
-
+    public BulletPool bulletPool;
     public GameObject bulletPrefab;
     public float bulletSpeed = 20f;
 
+    private void Awake()
+    {
+        bulletPool = new BulletPool();
+        bulletPool.bulletPrefab = bulletPrefab;
+
+        bulletPool.Awake();
+    }
     void Start()
     {
         
@@ -43,17 +50,70 @@ public class LightAttack : MonoBehaviour
         {
             if (firepoint != null)
             {
-                // Instantiate the bullet at the firepoint's position and rotation
-                GameObject bullet = Instantiate(bulletPrefab, firepoint.transform.position , firepoint.transform.rotation);
+                GameObject bullet = bulletPool.GetBullet();
 
-                // Apply velocity to make it move forward
+                bullet.transform.position = firepoint.transform.position;
+                bullet.transform.rotation = firepoint.transform.rotation;
+
                 Rigidbody rb = bullet.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
                     rb.velocity = firepoint.transform.forward * bulletSpeed;
                 }
+
+                StartCoroutine(ReturnBulletToPoolAfterDelay(bullet, 2f));
             }
         }
 
+    }
+
+    private IEnumerator ReturnBulletToPoolAfterDelay(GameObject bullet, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        bulletPool.ReturnBullet(bullet);
+    }
+
+
+}
+
+
+public class BulletPool 
+{
+    public GameObject bulletPrefab;     
+    public int poolSize = 10;           
+    private Queue<GameObject> bulletPool;
+
+    public void Awake()
+    {
+        bulletPool = new Queue<GameObject>();
+
+        for (int i = 0; i < poolSize; i++)
+        {
+            GameObject bullet = Object.Instantiate(bulletPrefab);
+            bullet.SetActive(false);
+            bulletPool.Enqueue(bullet);
+        }
+    }
+
+    public GameObject GetBullet()
+    {
+        if (bulletPool.Count > 0)
+        {
+            GameObject bullet = bulletPool.Dequeue();
+            bullet.SetActive(true);
+            return bullet;
+        }
+        else
+        {
+            GameObject bullet = Object.Instantiate(bulletPrefab); 
+            bullet.SetActive(true);
+            return bullet;
+        }
+    }
+
+    public void ReturnBullet(GameObject bullet)
+    {
+        bullet.SetActive(false);
+        bulletPool.Enqueue(bullet);
     }
 }
