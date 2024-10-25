@@ -35,7 +35,7 @@ public class BossMovement : MonoBehaviour
             {
                 Debug.Log("IN Top");
                 Vector3 targetPosition = currentPath[currentTargetIndex].position;
-                targetPosition.y = 0;
+                targetPosition.y = transform.position.y;
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                 
                 transform.LookAt(new Vector3(player.transform.position.x,transform.position.y, player.transform.position.z));
@@ -91,6 +91,7 @@ public class BossMovement : MonoBehaviour
     }
 
 
+
   
 
 
@@ -98,8 +99,6 @@ public class BossMovement : MonoBehaviour
     {
         int randomNode = Random.Range(1, nodes.Count - 1);
 
-        
-        
         return nodes[randomNode];
     }
 }

@@ -26,7 +26,10 @@ public class BossShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            isEnraged = true;
+        }
         if(isEnraged)
         {
             if(timer <=0)
