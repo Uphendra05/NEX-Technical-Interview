@@ -7,10 +7,16 @@ public class BossMovement : MonoBehaviour
     public FindPath pathfinding;
     public Node startNode;
     public Node endNode;
-    public Node _endNode;
+    public Node enragedStartNode;
+    public Node enragedNode;
     public float speed = 2.0f;
+    public bool isEnraged = false;
+    public GameObject player;
 
-    public List<Node> currentPath = new List<Node>();
+    public List<Node> nodes = new List<Node>();
+
+    private List<Node> currentPath = new List<Node>();
+
     public int currentTargetIndex = 0;
 
     void Start()
@@ -21,41 +27,83 @@ public class BossMovement : MonoBehaviour
 
     void Update()
     {
-        
-        if (currentPath != null && currentPath.Count > 0)
+        if (isEnraged == false)
         {
-            Debug.Log("IN Top");
-            Vector3 targetPosition = currentPath[currentTargetIndex].position;
-            targetPosition.y = 0;
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            enragedStartNode = currentPath[currentTargetIndex];
 
-            if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+            if (currentPath != null && currentPath.Count > 0)
             {
-                Debug.Log("IN Mid");
-                currentTargetIndex++;
+                Debug.Log("IN Top");
+                Vector3 targetPosition = currentPath[currentTargetIndex].position;
+                targetPosition.y = 0;
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                
+                transform.LookAt(new Vector3(player.transform.position.x,transform.position.y, player.transform.position.z));
 
-                if (currentTargetIndex >= currentPath.Count)
+
+
+                if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
                 {
-                    Debug.Log("IN Low");
-                    Node newStartNode = currentPath[currentTargetIndex - 1];
-                    Node newEndNode = _endNode; 
+                    Debug.Log("IN Mid");
+                    currentTargetIndex++;
 
-                    
-                    pathfinding = new FindPath(newStartNode, newEndNode);
+                    if (currentTargetIndex >= currentPath.Count)
+                    {
+                        Debug.Log("IN Low");
+                        Node newStartNode = currentPath[currentTargetIndex - 1];
+                        Node newEndNode = GetNewEndNode();
 
-                    currentPath = pathfinding.FindBFSPath(); 
-                    currentTargetIndex = 0; 
+
+                        pathfinding = new FindPath(newStartNode, newEndNode);
+                        currentPath = pathfinding.FindBFSPath();
+                        currentTargetIndex = 0;
+                    }
+
+
                 }
+            }
+        }
+        else
+        {
+            Node newStartNode = enragedStartNode;
 
+            pathfinding = new FindPath(currentPath[currentPath.Count-1], enragedNode);
+            currentPath = pathfinding.FindBFSPath();
+
+
+
+            if (currentPath != null && currentPath.Count > 0)
+            {
+                Debug.Log("IN Top");
+                Vector3 targetPosition = enragedNode.position;
+                targetPosition.y = 0;
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+                if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+                {
+                    Debug.Log("In Middle of Arena");
+                    //currentTargetIndex++;
+
+                }
 
             }
         }
     }
 
-    //Node GetNewEndNode()
-    //{
-    //    // Logic to get a new end node
-    //    // Can be random or predetermined
-    //    return /* some new end node */;
-    //}
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.forward);
+    }
+
+
+    Node GetNewEndNode()
+    {
+        int randomNode = Random.Range(1, nodes.Count - 1);
+
+        
+        
+        return nodes[randomNode];
+    }
 }

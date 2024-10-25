@@ -7,6 +7,7 @@ public class Node : MonoBehaviour
     public Vector3 position;
     public List<Node> neighbors = new List<Node>();
 
+
     private void Start()
     {
         position = transform.position;
@@ -14,6 +15,10 @@ public class Node : MonoBehaviour
 
     void OnDrawGizmos()
     {
+
+       Gizmos.DrawWireSphere(transform.position, 2);
+
+
         Gizmos.color = Color.green;
         foreach (var neighbor in neighbors)
         {
