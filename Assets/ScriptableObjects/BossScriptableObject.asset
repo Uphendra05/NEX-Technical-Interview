@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be018bb1558526348a2960ccb0cec61b, type: 3}
   m_Name: BossScriptableObject
   m_EditorClassIdentifier: 
-  waypoints: []
+  startNode: {fileID: 0}
+  endNode: {fileID: 0}
+  speed: 20
+  isEnraged: 0
+  player: {fileID: 0}
+  nodes: []
+  currentPath: []
+  currentTargetIndex: 0

@@ -5,7 +5,8 @@ using Zenject;
 
 public class BossView : MonoBehaviour
 {
-    [SerializeField] private BossSO bossSO;
+    [HideInInspector]
+    [Inject] public BossSO bossSO;
 
     private IBossService m_BossService;
 

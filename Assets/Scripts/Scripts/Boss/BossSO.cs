@@ -7,8 +7,20 @@ using UnityEngine;
 
 public class BossSO : ScriptableObject
 {
-   
-    public List<GameObject> waypoints = new List<GameObject>();
+
+    public FindPath pathfinding;
+    public Node startNode;
+    public Node endNode;
+
+    public float speed = 2.0f;
+    public bool isEnraged = false;
+    public GameObject player;
+
+    public List<Node> nodes = new List<Node>();
+
+    public List<Node> currentPath = new List<Node>();
+
+    public int currentTargetIndex = 0;
 
 
 

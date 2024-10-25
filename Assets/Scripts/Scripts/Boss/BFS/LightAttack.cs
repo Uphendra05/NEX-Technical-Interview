@@ -9,6 +9,8 @@ public class LightAttack : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed = 20f;
 
+    public float timer = 0;
+
     private void Awake()
     {
         bulletPool = new BulletPool();
@@ -24,10 +26,25 @@ public class LightAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+
+        if (timer <= 0)
         {
+            timer = 1.5f;
             SpawnBullets();
+
         }
+        else
+        {
+            timer -= Time.deltaTime;
+        }
+
+
+
+
+        //if (Input.GetKeyDown(KeyCode.LeftControl))
+        //{
+        //    SpawnBullets();
+        //}
 
     }
 
@@ -80,7 +97,7 @@ public class LightAttack : MonoBehaviour
 public class BulletPool 
 {
     public GameObject bulletPrefab;     
-    public int poolSize = 10;           
+    public int poolSize = 20;           
     private Queue<GameObject> bulletPool;
 
     public void Awake()

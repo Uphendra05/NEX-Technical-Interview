@@ -7,8 +7,7 @@ public class BossMovement : MonoBehaviour
     public FindPath pathfinding;
     public Node startNode;
     public Node endNode;
-    public Node enragedStartNode;
-    public Node enragedNode;
+   
     public float speed = 2.0f;
     public bool isEnraged = false;
     public GameObject player;
@@ -29,7 +28,7 @@ public class BossMovement : MonoBehaviour
     {
         if (isEnraged == false)
         {
-            enragedStartNode = currentPath[currentTargetIndex];
+            
 
             if (currentPath != null && currentPath.Count > 0)
             {
@@ -63,31 +62,7 @@ public class BossMovement : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            Node newStartNode = enragedStartNode;
-
-            pathfinding = new FindPath(currentPath[currentPath.Count-1], enragedNode);
-            currentPath = pathfinding.FindBFSPath();
-
-
-
-            if (currentPath != null && currentPath.Count > 0)
-            {
-                Debug.Log("IN Top");
-                Vector3 targetPosition = enragedNode.position;
-                targetPosition.y = transform.position.y;
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
-                if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-                {
-                    Debug.Log("In Middle of Arena");
-                    //currentTargetIndex++;
-
-                }
-
-            }
-        }
+        
     }
 
 
