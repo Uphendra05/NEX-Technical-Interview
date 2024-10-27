@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7b9cba9d61d3c24abf2aacb055b837d, type: 3}
-  m_Name: HealthScriptableObject
+  m_Name: PlayerHealthScriptableObject
   m_EditorClassIdentifier: 
-  healthAmount: 100
-  damageAmount: 10
+  damageAmount: 0
   maxHealth: 100
+  currentHealth: 0

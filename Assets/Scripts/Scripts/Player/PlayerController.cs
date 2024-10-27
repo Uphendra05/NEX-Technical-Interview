@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private Dictionary<EPlayerState, BaseState> m_ListOfStates = new Dictionary<EPlayerState, BaseState>();
     public EPlayerState CurrentStateID = EPlayerState.IDLE;
+
     private IPlayerInputService m_IPlayerInputService;
     private IRaycastService m_RaycastService;
     private IPlayerHealthService m_PlayerHealthService;
@@ -46,7 +47,6 @@ public class PlayerController : MonoBehaviour
     {
         m_IPlayerInputService.UpdateInputs();
 
-        Debug.Log(" Current State : " + CurrentStateID.ToString());
         foreach (var state in m_ListOfStates)
         {
             state.Value.Update();

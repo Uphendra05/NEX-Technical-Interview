@@ -9,6 +9,11 @@ public class BossView : MonoBehaviour
     [Inject] public BossSO bossSO;
 
     private IBossService m_BossService;
+    public GameObject waypointParent;
+    public GameObject player;
+
+    [HideInInspector]
+    public BossMovement bossData;
 
     [Inject]
     private void Construct(IBossService bossService)
@@ -16,10 +21,16 @@ public class BossView : MonoBehaviour
         m_BossService  = bossService;
     }
 
+    private void Awake()
+    {
+        bossData = this.GetComponent<BossMovement>();
+
+       
+    }
 
     void Start()
     {
-        m_BossService.StartBossPhase();
+        m_BossService.StartBossPhase(this);
     }
 
     void Update()

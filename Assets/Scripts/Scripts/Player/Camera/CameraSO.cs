@@ -11,7 +11,7 @@ public class CameraSO : ScriptableObject
     public PlayerController player ;
     public float deadzone;
     public float followdistance;
-    public Transform target;
+    public GameObject target;
     public Vector3 camePos;
     public Vector3 followoffset;
     public Vector3 _mouseDir;

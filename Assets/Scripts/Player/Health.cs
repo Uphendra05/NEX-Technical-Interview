@@ -26,6 +26,11 @@ public class Health : MonoBehaviour
         Actions.onHit -= TakeDamage;
         Actions.onHeal -= GainHealth;
     }
+    private void OnDestroy()
+    {
+        Actions.onHit -= TakeDamage;
+        Actions.onHeal -= GainHealth;
+    }
 
     private void Update()
     {

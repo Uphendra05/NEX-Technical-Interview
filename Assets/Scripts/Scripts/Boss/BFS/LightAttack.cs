@@ -7,6 +7,7 @@ public class LightAttack : MonoBehaviour
     public List<GameObject> firePoints = new List<GameObject>();
     public BulletPool bulletPool;
     public GameObject bulletPrefab;
+    public GameObject bulletParentTransform;
     public float bulletSpeed = 20f;
 
     public float timer = 0;
@@ -15,6 +16,7 @@ public class LightAttack : MonoBehaviour
     {
         bulletPool = new BulletPool();
         bulletPool.bulletPrefab = bulletPrefab;
+        bulletPool.bulletParent = bulletParentTransform;
 
         bulletPool.Awake();
     }
@@ -96,7 +98,8 @@ public class LightAttack : MonoBehaviour
 
 public class BulletPool 
 {
-    public GameObject bulletPrefab;     
+    public GameObject bulletPrefab;
+    public GameObject bulletParent;     
     public int poolSize = 20;           
     private Queue<GameObject> bulletPool;
 
@@ -106,7 +109,7 @@ public class BulletPool
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject bullet = Object.Instantiate(bulletPrefab);
+            GameObject bullet = Object.Instantiate(bulletPrefab, bulletParent.transform);
             bullet.SetActive(false);
             bulletPool.Enqueue(bullet);
         }

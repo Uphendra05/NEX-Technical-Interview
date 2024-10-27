@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234c90525ef0e584c850c90d0bb2bc54, type: 3}
   m_Name: BossServiceInstaller
   m_EditorClassIdentifier: 
-  bossScriptableObject: {fileID: 11400000, guid: 396ddc7536f740e4e87b4d80338053a7, type: 2}
+  bossScriptableObject: {fileID: 0}

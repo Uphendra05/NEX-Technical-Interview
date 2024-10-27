@@ -8,22 +8,39 @@ public class PlayerHealthService : IPlayerHealthService
 {
     [Inject] public PlayerHealthSO playerHealthSO;
 
-    public event Action OnHeal = delegate { };
-    public event Action OnDamage = delegate { };
+    private DiContainer DiContainer;
 
-    public void DamagePlayer()
+    private PlayerHealthView playerHealthView;
+    private RectTransform healthBar;
+
+
+    [Inject]
+    private void Construct(DiContainer container)
     {
-        throw new NotImplementedException();
+        DiContainer = container;
     }
 
-    public int GetHealth()
+    public void Start()
     {
-        throw new NotImplementedException();
+        playerHealthSO.currentHealth = playerHealthSO.maxHealth;
+       
     }
 
-    public void HealPlayer()
+    public void DamagePlayer(float amount)
     {
-        throw new NotImplementedException();
+
+        playerHealthSO.currentHealth -= amount;
+        playerHealthSO.currentHealth = Mathf.Clamp(playerHealthSO.currentHealth, 0f, playerHealthSO.maxHealth);
+
+
+    }
+
+    public void HealPlayer(float amount)
+    {
+        playerHealthSO.currentHealth += amount;
+        playerHealthSO.currentHealth = Mathf.Clamp(playerHealthSO.currentHealth, 0f, playerHealthSO.maxHealth);
+
+
     }
 
     public bool IsNoLives()
@@ -40,4 +57,14 @@ public class PlayerHealthService : IPlayerHealthService
     {
         throw new NotImplementedException();
     }
+
+    public int GetHealth()
+    {
+        throw new NotImplementedException();
+    }
+
+
+  
+
+   
 }

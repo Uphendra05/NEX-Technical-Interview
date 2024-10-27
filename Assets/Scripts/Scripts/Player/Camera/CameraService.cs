@@ -20,8 +20,8 @@ public class CameraService : ICameraService
 
     public void SetCameraFollow()
     {
-        m_PlayerController = m_Container.InstantiatePrefabForComponent<PlayerController>(cameraSO.player);
-        cameraSO.target = m_PlayerController.transform;
+       // m_PlayerController = m_Container.InstantiatePrefabForComponent<PlayerController>(cameraSO.player);
+       // cameraSO.target = m_PlayerController.transform;
         
     }
 
@@ -32,7 +32,7 @@ public class CameraService : ICameraService
 
     public void SpawnCamera(Vector2 position, Camera cam)
     {
-        cameraSO.followoffset = cam.transform.position - cameraSO.target.position;
+        cameraSO.followoffset = cam.transform.position - cameraSO.target.transform.position;
     }
 
     public void UpdateCamera(IPlayerInputService playerInputService,Camera cam)
@@ -44,7 +44,7 @@ public class CameraService : ICameraService
             cameraSO._mouseDir = mouseDir;
         }
 
-        cameraSO.camePos = cameraSO._mouseDir * cameraSO.followdistance + (cameraSO.target.position + cameraSO.followoffset);
+        cameraSO.camePos = cameraSO._mouseDir * cameraSO.followdistance + (cameraSO.target.transform.position + cameraSO.followoffset);
         cam.transform.position = Vector3.Lerp(cam.transform.position, cameraSO.camePos, Time.deltaTime * 10f);
     }
 }

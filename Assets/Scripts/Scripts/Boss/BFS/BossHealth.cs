@@ -27,6 +27,7 @@ public class BossHealth : MonoBehaviour
         {
             //boss.isEnraged = true;
             enragedMode.isEnraged = true;
+            boss.speed = 0;
         }
     }
 

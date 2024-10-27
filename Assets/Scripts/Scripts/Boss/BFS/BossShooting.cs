@@ -40,8 +40,10 @@ public class BossShooting : MonoBehaviour
             }
             else
             {
+                this.transform.parent = null;
+
                 DeployLasers();
-                transform.Rotate(0, 100 * Time.deltaTime, 0);
+                transform.Rotate(0, 40 * Time.deltaTime, 0);
                 timer -= Time.deltaTime;
             }
         }
@@ -64,22 +66,20 @@ public class BossShooting : MonoBehaviour
                 Vector3 position = obj.transform.position;
                 Vector3 direction = obj.transform.forward;
 
-                LineRenderer lr = lineRenderers[i]; // Get the corresponding LineRenderer
-                lr.SetPosition(0, position); // Set the line's start position
+                LineRenderer lr = lineRenderers[i];
+                lr.SetPosition(0, position); 
 
                 RaycastHit hit;
-                if (Physics.Raycast(position, direction, out hit, 100))
+                if (Physics.Raycast(position, direction, out hit, 100, 0 << 9))
                 {
-                    // Ray hit something
-                    lr.SetPosition(1, hit.point); // Set the line's end position to the hit point
+                    lr.SetPosition(1, hit.point); 
                     lr.startColor = Color.red;
                     lr.endColor = Color.red;
                 }
                 else
                 {
-                    // Ray did not hit anything
                     Vector3 endPosition = position + direction * 100;
-                    lr.SetPosition(1, endPosition); // Set the line's end position to the max distance
+                    lr.SetPosition(1, endPosition); 
                     lr.startColor = Color.red;
                     lr.endColor = Color.red;
                 }

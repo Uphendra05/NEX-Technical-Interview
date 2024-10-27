@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class BossMovement : MonoBehaviour
 {
@@ -14,66 +15,23 @@ public class BossMovement : MonoBehaviour
 
     public List<Node> nodes = new List<Node>();
 
-    private List<Node> currentPath = new List<Node>();
+    public List<Node> currentPath = new List<Node>();
 
     public int currentTargetIndex = 0;
 
+    public GameService gameLoop;
+
     void Start()
     {
-        pathfinding = new FindPath(startNode,endNode);
-        currentPath = pathfinding.FindBFSPath();
-    }
+        player = gameLoop.m_PlayerController.gameObject;
 
-    void Update()
-    {
-        if (isEnraged == false)
-        {
-            
-
-            if (currentPath != null && currentPath.Count > 0)
-            {
-                Debug.Log("IN Top");
-                Vector3 targetPosition = currentPath[currentTargetIndex].position;
-                targetPosition.y = transform.position.y;
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-                
-                transform.LookAt(new Vector3(player.transform.position.x,transform.position.y, player.transform.position.z));
-
-
-
-                if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-                {
-                    Debug.Log("IN Mid");
-                    currentTargetIndex++;
-
-                    if (currentTargetIndex >= currentPath.Count)
-                    {
-                        Debug.Log("IN Low");
-                        Node newStartNode = currentPath[currentTargetIndex - 1];
-                        Node newEndNode = GetNewEndNode();
-
-
-                        pathfinding = new FindPath(newStartNode, newEndNode);
-                        currentPath = pathfinding.FindBFSPath();
-                        currentTargetIndex = 0;
-                    }
-
-
-                }
-            }
-        }
         
     }
 
+   
 
 
-  
 
 
-    Node GetNewEndNode()
-    {
-        int randomNode = Random.Range(1, nodes.Count - 1);
-
-        return nodes[randomNode];
-    }
+   
 }

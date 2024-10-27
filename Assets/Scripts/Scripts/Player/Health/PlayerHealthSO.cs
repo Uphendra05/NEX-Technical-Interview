@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "HealthScriptableObject", menuName = "ScriptableObjects/HealthScriptableObject")]
+[CreateAssetMenu(fileName = "PlayerHealthScriptableObject", menuName = "ScriptableObjects/PlayerHealthScriptableObject")]
 
 public class PlayerHealthSO : ScriptableObject
 {
-    public int healthAmount;
-    public int damageAmount;
-    public int maxHealth = 100; // Subject to change ?
+   
+    public float maxHealth = 100; 
+    public float currentHealth;
 
 }
