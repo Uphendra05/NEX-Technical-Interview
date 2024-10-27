@@ -19,11 +19,16 @@ public class GameService : MonoBehaviour
     {
         m_Container = container;
     }
-
-    void Start()
+    private void Awake()
     {
         m_PlayerController = m_Container.InstantiatePrefabForComponent<PlayerController>(cameraSO.player);
         cameraSO.target = m_PlayerController.gameObject;
+
+    }
+
+    void Start()
+    {
+
     }
 
     // Update is called once per frame

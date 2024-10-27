@@ -8,15 +8,6 @@ public class CameraService : ICameraService
 {
     [Inject] private CameraSO cameraSO ;
 
-    private DiContainer m_Container;
-    private PlayerController m_PlayerController;
-
-    [Inject] 
-    private void Construct(DiContainer container)
-    {
-        m_Container = container;
-    }
-
 
     public void SetCameraFollow()
     {
