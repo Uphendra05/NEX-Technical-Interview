@@ -8,17 +8,7 @@ public class PlayerHealthService : IPlayerHealthService
 {
     [Inject] public PlayerHealthSO playerHealthSO;
 
-    private DiContainer DiContainer;
-
-    private PlayerHealthView playerHealthView;
-    private RectTransform healthBar;
-
-
-    [Inject]
-    private void Construct(DiContainer container)
-    {
-        DiContainer = container;
-    }
+   
 
     public void Start()
     {
