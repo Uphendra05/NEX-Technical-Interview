@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a59e9965cc9934ebef9b6f207ffdf2, type: 3}
   m_Name: BossHealthScriptableObject
   m_EditorClassIdentifier: 
-  maxHealth: 250
+  maxHealth: 1500
   currentHealth: 0
