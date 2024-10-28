@@ -10,7 +10,6 @@ public class PlayerSO : ScriptableObject
     [Header("Player Attributes")]
     public float speed;
     public Rigidbody rb;
-    public LayerMask whatIsGround;
     public LayerMask whatIsRayGround;
 
     [Header("Player Dash Attributes ")]
@@ -25,5 +24,10 @@ public class PlayerSO : ScriptableObject
     public LayerMask whatIsEnemy;
     public float fireRate;
 
-
+    [Header("Player Fall Attributes")]
+    public float gravity;
+    public Vector3 playerPos;
+    public LayerMask whatisGround;
+    public bool isGrounded = false;
+    public Vector3 lastPos;
 }

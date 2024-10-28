@@ -12,16 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e544891075e59c24faaf297d4f634d9a, type: 3}
   m_Name: PlayerScriptableObject
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 0.1
   rb: {fileID: 0}
-  whatisGround:
+  whatIsRayGround:
     serializedVersion: 2
-    m_Bits: 64
-  rayGround:
-    serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   dashDistance: 10
   dashTime: 0.15
   dashCooldown: 1
   canDash: 1
   obstacleCheckDistance: 10
+  firePoint: {fileID: 0}
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  fireRate: 0
+  gravity: -91.8
+  playerPos: {x: 0, y: 0, z: 0}
+  whatisGround:
+    serializedVersion: 2
+    m_Bits: 64
+  isGrounded: 0
+  lastPos: {x: 225.05402, y: 1.5238552, z: -12.970365}

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerInputService : IPlayerInputService
 {
-    public Vector2 InputAxis { get { return inputAxis; } }
+    public Vector3 InputAxis { get { return inputAxis; } }
     public Vector2 MousePosition { get { return mousPosition; } }
 
     public event Action OnMouseDown = delegate { };
@@ -13,7 +13,7 @@ public class PlayerInputService : IPlayerInputService
     public event Action OnDash = delegate { };
 
 
-    private Vector2 inputAxis = Vector2.zero;
+    private Vector3 inputAxis = Vector3.zero;
     private Vector2 mousPosition = Vector2.zero;
 
     public KeyCode dashKey = KeyCode.Space;
@@ -24,7 +24,7 @@ public class PlayerInputService : IPlayerInputService
     public void UpdateInputs()
     {
         inputAxis.x = Input.GetAxisRaw(HORIZONTAL);
-        inputAxis.y = Input.GetAxisRaw(VERTICAL);
+        inputAxis.z = Input.GetAxisRaw(VERTICAL);
 
         inputAxis.Normalize();
 

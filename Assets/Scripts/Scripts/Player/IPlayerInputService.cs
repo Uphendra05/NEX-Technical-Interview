@@ -6,7 +6,7 @@ using UnityEngine;
 
 public interface IPlayerInputService
 {
-    public Vector2 InputAxis { get; }
+    public Vector3 InputAxis { get; }
     public Vector2 MousePosition { get; }
 
     public event Action OnMouseDown;

@@ -48,7 +48,7 @@ public class TurretView : MonoBehaviour
 
         if (timer <= 0)
         {
-            timer = 1.5f;
+            timer = 0.5f;
             Shoot();
 
         }

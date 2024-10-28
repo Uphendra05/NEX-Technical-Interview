@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class DodgeState : BaseState
 {
@@ -13,7 +14,7 @@ public class DodgeState : BaseState
     public override void Start()
     {
         m_PlayerController.playerScriptabelObject.canDash = true;
-        m_InputService.OnDash += Dash;
+        m_InputService.OnDash += PlayerDash;
     }
 
     public override void Update()
@@ -30,7 +31,20 @@ public class DodgeState : BaseState
     public override void OnDestroy()
     {
 
-        m_InputService.OnDash -= Dash;
+        m_InputService.OnDash -= PlayerDash;
+    }
+
+    public void PlayerDash()
+    {
+        if (m_InputService.InputAxis.magnitude == 0)
+        {
+
+            Dash();
+        }
+        else
+        {
+            Dash2(m_InputService.InputAxis, m_PlayerController.playerCam);
+        }
     }
 
     public void Dash()
@@ -39,7 +53,16 @@ public class DodgeState : BaseState
         if (m_PlayerController.playerScriptabelObject.canDash == true)
         {
             m_PlayerController.playerScriptabelObject.canDash = false;
-            m_PlayerController.StartCoroutine(DoDash());
+            Vector3 endPos = m_PlayerController.transform.position +  m_PlayerController.transform.forward * m_PlayerController.playerScriptabelObject.dashDistance;
+
+
+            RaycastHit hit;
+            if (Physics.Raycast(m_PlayerController.transform.position,  m_PlayerController.transform.forward, out hit, m_PlayerController.playerScriptabelObject.obstacleCheckDistance))
+            {
+                Debug.Log(hit.point);
+                endPos = hit.point;
+            }
+            m_PlayerController.StartCoroutine(DoDash(endPos));
         }
        
 
@@ -47,14 +70,62 @@ public class DodgeState : BaseState
 
     }
 
-
-    private IEnumerator DoDash()
+    public void Dash2(Vector3 dashDirection, Camera camera)
     {
+        if (m_PlayerController.playerScriptabelObject.canDash)
+        {
+            m_PlayerController.playerScriptabelObject.canDash = false;
+            Vector3 cameraRelativeDirection = CamRelativeDirection(dashDirection, camera);
+            Vector3 endPos = m_PlayerController.transform.position + cameraRelativeDirection.normalized * m_PlayerController.playerScriptabelObject.dashDistance;
 
 
+            RaycastHit hit;
+            if (Physics.Raycast(m_PlayerController.transform.position, cameraRelativeDirection, out hit, m_PlayerController.playerScriptabelObject.obstacleCheckDistance))
+            {
+                Debug.Log(hit.point);
+                endPos = hit.point;
+            }
+            m_PlayerController.StartCoroutine(DoDash2(endPos));
+        }
+
+        if (m_PlayerController.playerScriptabelObject.rb.velocity == new Vector3(0, 0, 0))
+        {
+            return;
+        }
+    }
+
+
+    private IEnumerator DoDash(Vector3 endPos)
+    {
         float elapsedTime = 0f;
         Vector3 startPos = m_PlayerController.transform.position;
-        Vector3 endPos = startPos + m_PlayerController.transform.forward * m_PlayerController.playerScriptabelObject.dashDistance;
+
+        while (elapsedTime < m_PlayerController.playerScriptabelObject.dashTime)
+        {
+            float t = elapsedTime / m_PlayerController.playerScriptabelObject.dashTime;
+
+            float y = Mathf.Sin(t * Mathf.PI);
+            Vector3 pos = Vector3.Lerp(startPos, endPos, t);
+            pos.y += y * 0.5f;
+
+            m_PlayerController.transform.position = pos;
+            m_PlayerController.isInvincible = true;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        m_PlayerController.isInvincible = false;
+        m_PlayerController.transform.position = endPos;
+        yield return new WaitForSeconds(m_PlayerController.playerScriptabelObject.dashCooldown);
+        m_PlayerController.playerScriptabelObject.canDash = true;
+    }
+
+
+    private IEnumerator DoDash2(Vector3 endPos)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPos = m_PlayerController.transform.position;
 
         while (elapsedTime < m_PlayerController.playerScriptabelObject.dashTime)
         {
@@ -64,19 +135,23 @@ public class DodgeState : BaseState
             float y = Mathf.Sin(t * Mathf.PI);
             Vector3 pos = Vector3.Lerp(startPos, endPos, t);
             pos.y += y * 0.5f;
+
             m_PlayerController.transform.position = pos;
 
+
             elapsedTime += Time.deltaTime;
-            m_PlayerController.isInvincible = true;
+
             yield return null;
         }
-        m_PlayerController.isInvincible = false;
 
         m_PlayerController.transform.position = endPos;
         yield return new WaitForSeconds(m_PlayerController.playerScriptabelObject.dashCooldown);
-        m_PlayerController.playerScriptabelObject.canDash = true;
 
+
+        m_PlayerController.playerScriptabelObject.canDash = true;
     }
+
+   
 
     private Vector3 CamRelativeDirection(Vector3 direction, Camera camera)
     {

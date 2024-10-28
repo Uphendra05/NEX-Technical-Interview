@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public PlayerSO playerScriptabelObject;
     public bool isInvincible = false;
+    public Camera playerCam;
     private Dictionary<EPlayerState, BaseState> m_ListOfStates = new Dictionary<EPlayerState, BaseState>();
     public EPlayerState CurrentStateID = EPlayerState.IDLE;
 
@@ -103,6 +104,14 @@ public class PlayerController : MonoBehaviour
         foreach (var state in m_ListOfStates)
         {
             state.Value.OnDestroy();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Heal"))
+        {
+            Actions.onHeal(100f);
         }
     }
 }
