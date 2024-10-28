@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Actions.onHit(25.0f);
+            Actions.onHit(5.0f);
            // Debug.Log("Player Hit !");
            gameObject.SetActive(false);
         }

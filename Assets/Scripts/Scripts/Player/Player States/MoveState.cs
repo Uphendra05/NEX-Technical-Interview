@@ -17,7 +17,6 @@ public class MoveState : BaseState
 
     public override void Update()
     {
-        
     }
 
     public override void FixedUpdate()
@@ -59,7 +58,9 @@ public class MoveState : BaseState
         m_PlayerController.playerScriptabelObject.rb.AddForce(velocity, ForceMode.VelocityChange);
         float drag = 10f;
         m_PlayerController.playerScriptabelObject.rb.drag = drag;
-       // Debug.Log("Input X : " + m_InputService.InputAxis.x + "Input Y : " + m_InputService.InputAxis.y);
+        m_PlayerController.transform.position = new Vector3(m_PlayerController.transform.position.x, 1.5f, m_PlayerController.transform.position.z);
+
+        // Debug.Log("Input X : " + m_InputService.InputAxis.x + "Input Y : " + m_InputService.InputAxis.y);
 
     }
 

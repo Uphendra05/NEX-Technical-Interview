@@ -20,10 +20,23 @@ public class UiService : IUiService
 
     public void ExitGame()
     {
-        Debug.Log("Game Ending !");
+       Application.Quit();
 
 
 
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+
+        Debug.Log("Game MainMenu !");
+
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+    }
 }

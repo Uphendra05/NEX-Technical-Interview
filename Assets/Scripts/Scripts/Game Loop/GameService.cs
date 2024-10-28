@@ -8,12 +8,15 @@ public class GameService : MonoBehaviour
 {
 
     [Inject] private CameraSO cameraSO;
+    [Inject] private PlayerHealthSO healthSO;
 
     public PlayerController m_PlayerController;
     private DiContainer m_Container;
     public GameObject boosGameobject;
     public GameObject levelGameobject;
-    public GameObject cameraGameobject; 
+    public GameObject cameraGameobject;
+    public GameObject gameOverPanel; 
+    public GameObject healthImage; 
 
     [Inject]
     private void Construct(DiContainer container)
@@ -25,12 +28,16 @@ public class GameService : MonoBehaviour
         m_PlayerController = m_Container.InstantiatePrefabForComponent<PlayerController>(cameraSO.player);
         cameraSO.target = m_PlayerController.gameObject;
         m_PlayerController.playerCam = cameraGameobject.GetComponent<Camera>();
+        gameOverPanel.SetActive(false);
+        Time.timeScale = 1;
+        healthImage.SetActive(true);
+
 
     }
 
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -40,5 +47,18 @@ public class GameService : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        GameOver();
+    }
+
+    void GameOver()
+    {
+       if (healthSO.currentHealth <= 0)
+       {
+
+            Time.timeScale = 0;
+            gameOverPanel.SetActive(true);
+            healthImage.SetActive(false);
+            m_PlayerController.gameObject.SetActive(false);
+       }
     }
 }

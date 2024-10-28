@@ -37,4 +37,13 @@ public class UiView : MonoBehaviour
     {
         m_UiService.ExitGame();
     }
+    public void MainMenu()
+    {
+        m_UiService.MainMenu();
+    }
+
+    public void RestartGame()
+    {
+        m_UiService.RestartGame();
+    }
 }
