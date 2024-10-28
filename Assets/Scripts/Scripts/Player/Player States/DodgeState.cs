@@ -67,8 +67,10 @@ public class DodgeState : BaseState
             m_PlayerController.transform.position = pos;
 
             elapsedTime += Time.deltaTime;
+            m_PlayerController.isInvincible = true;
             yield return null;
         }
+        m_PlayerController.isInvincible = false;
 
         m_PlayerController.transform.position = endPos;
         yield return new WaitForSeconds(m_PlayerController.playerScriptabelObject.dashCooldown);

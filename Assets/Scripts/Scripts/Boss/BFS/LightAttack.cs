@@ -109,9 +109,19 @@ public class BulletPool
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject bullet = Object.Instantiate(bulletPrefab, bulletParent.transform);
-            bullet.SetActive(false);
-            bulletPool.Enqueue(bullet);
+            if(bulletParent != null)
+            {
+                GameObject bullet = Object.Instantiate(bulletPrefab, bulletParent.transform);
+                bullet.SetActive(false);
+                bulletPool.Enqueue(bullet);
+            }
+            else
+            {
+                GameObject bullet = Object.Instantiate(bulletPrefab);
+                bullet.SetActive(false);
+                bulletPool.Enqueue(bullet);
+            }
+           
         }
     }
 

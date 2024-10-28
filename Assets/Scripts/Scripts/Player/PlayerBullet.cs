@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PlayerBullet : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -18,15 +18,14 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-       
 
-        gameObject.SetActive(false);
+       gameObject.SetActive(false);
 
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Boss"))
         {
-            Actions.onHit(25.0f);
-           // Debug.Log("Player Hit !");
-           gameObject.SetActive(false);
+            Actions.onBossHit(25.0f);
+            Debug.Log("Player Hit !");
+            gameObject.SetActive(false);
         }
     }
 }

@@ -9,8 +9,11 @@ public class BossShooting : MonoBehaviour
 
     public bool isEnraged;
     public float timer = 10;
+    public GameObject lightAttack;
+    public BossMovement boss;
     void Start()
     {
+
         foreach (GameObject obj in firePoints)
         {
             LineRenderer lr = obj.AddComponent<LineRenderer>();
@@ -32,18 +35,22 @@ public class BossShooting : MonoBehaviour
         }
         if(isEnraged)
         {
-            if(timer <=0)
+            lightAttack.SetActive(false);
+            boss.speed = 0;
+            if (timer <=0)
             {
                 Debug.Log("Boss Cooldown in progress");
                 isEnraged = false;
                 this.gameObject.SetActive(false);
+                lightAttack.SetActive(true);
+                boss.speed = 20;
             }
             else
             {
                 this.transform.parent = null;
 
                 DeployLasers();
-                transform.Rotate(0, 40 * Time.deltaTime, 0);
+                transform.Rotate(0, 20 * Time.deltaTime, 0);
                 timer -= Time.deltaTime;
             }
         }
@@ -67,11 +74,18 @@ public class BossShooting : MonoBehaviour
                 Vector3 direction = obj.transform.forward;
 
                 LineRenderer lr = lineRenderers[i];
-                lr.SetPosition(0, position); 
+                lr.SetPosition(0, position);
 
+                int bulletLayer = LayerMask.NameToLayer("Bullet");
+                int raycastLayerMask = ~(1 << bulletLayer);
                 RaycastHit hit;
-                if (Physics.Raycast(position, direction, out hit, 100, 0 << 9))
+                if (Physics.Raycast(position, direction, out hit, 100, raycastLayerMask))
                 {
+                    if(hit.collider.gameObject.CompareTag("Player"))
+                    {
+                        Actions.onHit(0.45f);
+                    }
+                    
                     lr.SetPosition(1, hit.point); 
                     lr.startColor = Color.red;
                     lr.endColor = Color.red;

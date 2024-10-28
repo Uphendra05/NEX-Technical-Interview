@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
 
     public PlayerSO playerScriptabelObject;
-
+    public bool isInvincible = false;
     private Dictionary<EPlayerState, BaseState> m_ListOfStates = new Dictionary<EPlayerState, BaseState>();
     public EPlayerState CurrentStateID = EPlayerState.IDLE;
 

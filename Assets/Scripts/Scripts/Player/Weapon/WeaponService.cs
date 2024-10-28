@@ -8,21 +8,25 @@ using Zenject;
 
 public class WeaponService : MonoBehaviour
 {
-    //public WeaponSO weaponSO;
-
-    //private ObjectPool<TrailRenderer> trailRendererPool;
+   
+    public List<GameObject> firePoints = new List<GameObject>();
 
     public int damage = 10;
     public int range = 100;
 
-    public Transform spawnPoint;
-    public TrailRenderer bulletTrail;
-    public float shootDelay = 0.5f;
-    public LayerMask whatIsEnemy ;
-    private float lastShootTime;
-    public bool isSpread;
-    public Vector3 spreadAmount = Vector3.one;
+    public BulletPool bulletPool;
+    public GameObject bulletPrefab;
+    public float bulletSpeed = 20f;
 
+   
+    private void Awake()
+    {
+        bulletPool = new BulletPool();
+        bulletPool.bulletPrefab = bulletPrefab;
+        bulletPool.bulletParent = null;
+
+        bulletPool.Awake();
+    }
     private void Start()
     {
         
@@ -38,98 +42,41 @@ public class WeaponService : MonoBehaviour
 
     public void Shoot()
     {
-
-        if(lastShootTime  + shootDelay < Time.time)
+        foreach (GameObject firepoint in firePoints)
         {
-
-            Vector3 direction = GetDirection();
-
-
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(spawnPoint.transform.position, direction, out hitInfo, range))
+            if (firepoint != null)
             {
-                if(hitInfo.collider.gameObject.CompareTag("Enemy"))
-                {
-                    Destroy(hitInfo.collider.gameObject);
+                GameObject bullet = bulletPool.GetBullet();
 
+                bullet.transform.position = firepoint.transform.position;
+                bullet.transform.rotation = firepoint.transform.rotation;
+
+                Rigidbody rb = bullet.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.velocity = firepoint.transform.forward * bulletSpeed;
                 }
-                TrailRenderer trail = Instantiate(bulletTrail, spawnPoint.position, Quaternion.identity);
-               
-                StartCoroutine(MoveTrail(trail, hitInfo));
-               
-                lastShootTime = Time.time;
+
+                StartCoroutine(ReturnBulletToPoolAfterDelay(bullet, 2f));
             }
         }
-      
+
+
 
     }
 
-    public IEnumerator MoveTrail(TrailRenderer trail, RaycastHit hit)
+    private IEnumerator ReturnBulletToPoolAfterDelay(GameObject bullet, float delay)
     {
-        float time = 0;
-        Vector3 startPos = trail.transform.position;
-
-        while(time < 1)
-        {
-            bulletTrail.transform.position = Vector3.Lerp(startPos, hit.point, time);
-
-            time += Time.deltaTime / trail.time ;
-
-            yield return null;
-
-        }
-
-        trail.transform.position = hit.point;
-
-
-
-        yield return null;
+        yield return new WaitForSeconds(delay);
+        bulletPool.ReturnBullet(bullet);
     }
 
-    private Vector3 GetDirection()
-    {
-        Vector3 direction = spawnPoint.transform.forward;
 
-        if(isSpread)
-        {
-            direction += new Vector3(
-                Random.Range(-spreadAmount.x, spreadAmount.x),
-                Random.Range(-spreadAmount.y, spreadAmount.y),
-                Random.Range(-spreadAmount.z, spreadAmount.z));
-
-            direction.Normalize();
-
-        }
-
-        return direction.normalized;
-
-    }
 
     private void OnDrawGizmos()
     {
         
-        Vector3 startPoint = spawnPoint.position;
-
-        Vector3 direction = spawnPoint.forward;
-
-        float rayLength = range;
-
-        RaycastHit hit;
-        if (Physics.Raycast(startPoint, direction, out hit, rayLength))
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(startPoint, hit.point);
-
-            // Optionally, draw a sphere at the hit point
-            Gizmos.DrawSphere(hit.point, 0.2f);
-        }
-        else
-        {
-            // If no hit, draw a red ray showing the full length
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(startPoint, startPoint + direction * rayLength);
-        }
+      
     }
 
 

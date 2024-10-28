@@ -10,8 +10,8 @@ public class GameService : MonoBehaviour
 
     public PlayerController m_PlayerController;
     private DiContainer m_Container;
-    public GameObject boosGameobjec;
-    public GameObject levelGameobjec;
+    public GameObject boosGameobject;
+    public GameObject levelGameobject;
     public GameObject cameraGameobject; 
 
     [Inject]

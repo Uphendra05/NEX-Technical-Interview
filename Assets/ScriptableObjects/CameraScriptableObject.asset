@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e962b4129dea0b49833b0e1f3c918ec, type: 3}
   m_Name: CameraScriptableObject
   m_EditorClassIdentifier: 
-  player: {fileID: 4161564880164603230, guid: d08650424ec712d4598e81529f5d2410, type: 3}
+  player: {fileID: 1540302930309132499, guid: d08650424ec712d4598e81529f5d2410, type: 3}
   deadzone: 0.1
   followdistance: 1
   target: {fileID: 0}
-  camePos: {x: -2.1814983, y: 11.696547, z: 52.24687}
-  followoffset: {x: 9.7, y: 10.1, z: 9.7}
-  _mouseDir: {x: -0.39209148, y: -0.030517781, z: -0.9194198}
+  camePos: {x: 30.817408, y: 22.30034, z: 18.234184}
+  followoffset: {x: 18.66, y: 20.76, z: 19.13}
+  _mouseDir: {x: -0.44259316, y: 0.040340673, z: -0.89581466}

@@ -8,6 +8,8 @@ TagManager:
   - Reset
   - Rocks
   - Bullet
+  - PlayerBullet
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - Ray Ground
   - PostProcess
   - Bullet
-  - 
-  - 
+  - PlayerBullet
+  - Player
   - 
   - 
   - 

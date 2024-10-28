@@ -8,6 +8,7 @@ public class BossHealthView : MonoBehaviour
     private IBossHealthService m_HealthService;
     [Inject] BossHealthSO m_BossHealthSO;
     public RectTransform healthBar;
+    public BossShooting bossHealth;
 
     [Inject]
     private void Construct(IBossHealthService healthService)
@@ -46,6 +47,13 @@ public class BossHealthView : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P)) 
         {
             Actions.onBossHit(15);
+        }
+
+        if(m_BossHealthSO.currentHealth <= 50)
+        {
+            bossHealth.isEnraged = true;
+           
+
         }
 
     }

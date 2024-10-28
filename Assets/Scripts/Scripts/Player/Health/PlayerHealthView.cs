@@ -8,7 +8,8 @@ public class PlayerHealthView : MonoBehaviour
     private IPlayerHealthService m_HealthService;
     [Inject] PlayerHealthSO m_PlayerHealthSO;
     public RectTransform healthBar;
-
+    private PlayerController playerhealth;
+    public GameService gameservice;
 
     [Inject]
     private void Construct(IPlayerHealthService healthService)
@@ -37,6 +38,7 @@ public class PlayerHealthView : MonoBehaviour
 
     void Start()
     {
+        playerhealth = gameservice.m_PlayerController;
         m_HealthService.Start();
         
 
@@ -49,9 +51,13 @@ public class PlayerHealthView : MonoBehaviour
 
     public void Damage(float damage)
     {
-        
-       m_HealthService.DamagePlayer(damage);
-       StartCoroutine(LerpHealthBar());
+        if(!playerhealth.isInvincible)
+        {
+            Debug.Log("Getting Rayed");
+            m_HealthService.DamagePlayer(damage);
+            StartCoroutine(LerpHealthBar());
+        }
+       
         
             
 
