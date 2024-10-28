@@ -23,7 +23,7 @@ public class BossShooting : MonoBehaviour
             LineRenderer lr = obj.AddComponent<LineRenderer>();
             lr.startWidth = 0.75f;
             lr.endWidth = 0.75f;
-            lr.positionCount = 2;  // Two points for the line: start and end
+            lr.positionCount = 2; 
 
             lr.material = new Material(Shader.Find("Sprites/Default")); // Use a simple shader
             lineRenderers.Add(lr);

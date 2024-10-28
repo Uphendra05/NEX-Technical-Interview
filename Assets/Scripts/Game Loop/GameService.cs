@@ -50,10 +50,7 @@ public class GameService : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+       
         GameOver();
     }
 
@@ -61,14 +58,15 @@ public class GameService : MonoBehaviour
     {
        if (healthSO.currentHealth <= 0)
        {
-
-            Time.timeScale = 0;
+            enragedAudio.enabled = false;
             gameOverPanel.SetActive(true);
             healthImage.SetActive(false);
             m_PlayerController.gameObject.SetActive(false);
-       }
+            Time.timeScale = 0;
 
-       if(bossHealthSO.currentHealth <= 0)
+        }
+
+        if (bossHealthSO.currentHealth <= 0)
        {
             enragedAudio.enabled = false;
             gameWinPanel.SetActive(true);
